@@ -6,8 +6,16 @@ What does the project do?
 
 1. 
 
+Tech stack:
+ - Frontend:
+   Next.js/React
+   HTML/CSS/JS
+
+ - Backend:
+   Supabase/Postgres
 
 
+   
 Web flow:
 1. Frontend landing page
 2. Log in / sign up
