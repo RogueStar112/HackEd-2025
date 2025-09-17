@@ -1,12 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import generateTags from "@/app/actions/ai";
-import { AIMode, CreateResponse, Tag } from "@/lib/types";
+import createProjectData from "@/app/actions/createProjectData";
+import { CreateResponse, Tag } from "@/lib/types";
 import { createProject } from "@/app/actions/createProject";
+import { useRouter } from "next/navigation";
 
 
 export default function Page() {
+
+    const router = useRouter();
 
     const [projectName, setProjectName] = useState("");
     const [prompt, setPrompt] = useState("");
@@ -23,8 +26,7 @@ export default function Page() {
         const prompt = formData.get('prompt')!.toString();
 
         try {
-            const { description, tags } = await generateTags({
-                mode: AIMode.create,
+            const { description, tags } = await createProjectData({
                 prompt
             }) as CreateResponse;
 
@@ -50,8 +52,13 @@ export default function Page() {
 
     // upload to database
     const submitSelected = () => {
+
         const filtered = tags.filter(tag => tag.selected).map(tag => tag.categoryName);
         createProject({ name: projectName, description, categories: filtered });
+
+        // redirect to /projects/my
+        router.push("/projects/my")
+
     }
 
     return (
@@ -122,36 +129,4 @@ tag.selected ? "bg-green-500 text-white" : "bg-gray-300 text-black"
         </div>
     );
 
-    // return (
-    //     <div className="p-4">
-    //         <form action={onSubmit} className="flex flex-col gap-2 max-w-md">
-    //             <input
-    //                 type="text"
-    //                 name="prompt"
-    //                 placeholder="Describe your project..."
-    //                 value={prompt}
-    //                 onChange={(e) => setPrompt(e.target.value)}
-    //                 className="border p-2 rounded"
-    //             />
-    //             <button
-    //                 type="submit"
-    //                 className="bg-blue-600 text-white rounded px-4 py-2"
-    //                 disabled={loading}
-    //             >
-    //                 {loading ? "Generating..." : "Generate Tags"}
-    //             </button>
-    //         </form>
-    //
-    //         {tags.length > 0 && (
-    //             <div className="mt-4">
-    //                 <h2 className="font-semibold">Tags:</h2>
-    //                 <ul className="list-disc list-inside">
-    //                     {tags.map((tag, i) => (
-    //                         <li key={i}>{tag.categoryName}</li>
-    //                     ))}
-    //                 </ul>
-    //             </div>
-    //         )}
-    //     </div>
-    // );
 }
