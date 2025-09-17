@@ -69,7 +69,7 @@ export default function MyProjectsPage() {
             {/* Back to Dashboard button */}
             <button
                 className="mt-6 px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
-                onClick={() => router.push("/dashboard")}
+                onClick={() => router.push("/")}
             >
                 Go Back to Dashboard
             </button>

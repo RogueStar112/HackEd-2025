@@ -56,7 +56,7 @@ export function LoginForm({
             }
 
             if (profile) {
-                router.push("/dashboard");
+                router.push("/");
             } else {
                 router.push("/profile/modify");
             }
