@@ -7,15 +7,15 @@ interface ProjectPageProps {
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
-    const { id } = params
+    const { id } = await params;
 
     const supabase = createClient();
     const { data: project, error } = await supabase
         .from('projects')
         .select(`
-*,
-profiles(username, name),
-roles(*)
+        *,
+        profiles(username, name),
+        roles(*)
 `)
         .eq('id', id)
         .single()

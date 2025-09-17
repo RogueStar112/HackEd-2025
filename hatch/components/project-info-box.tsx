@@ -1,16 +1,10 @@
 'use client';
+
 import { useRouter } from "next/navigation";
+import { ProjectsPageRow } from "@/lib/types";
 
-interface ProjectInfoBoxProps {
-    id: string
-    name: string
-    description: string
-    owner?: string
-    category?: string
-    roles?: { skills: string[]; time_needed_hours: number }[]
-}
 
-export default function ProjectInfoBox({ id, name, description, owner, category, roles }: ProjectInfoBoxProps) {
+export default function ProjectInfoBox({ id, name, description, category, profiles, roles  }: ProjectsPageRow) {
 
     const router = useRouter();
 
@@ -26,7 +20,7 @@ export default function ProjectInfoBox({ id, name, description, owner, category,
             role="button"
         >
             <h2 className="text-lg font-bold">{name}</h2>
-            {owner && <p className="text-sm text-gray-600">Owner: {owner}</p>}
+            {profiles[0] && <p className="text-sm text-gray-600">Owner: {profiles[0].name}</p>}
             {category && <p className="text-sm text-gray-600">Category: {category}</p>}
             <p>{description}</p>
             {roles && roles.length > 0 && (
