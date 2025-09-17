@@ -45,7 +45,7 @@ export function LoginForm({
 
       // ✅ check if profile exists
       const { data: profile, error: profileError } = await supabase
-        .from("profile")
+        .from("profiles")
         .select("*")
         .eq("id", user.id) // adjust column name if your FK is different
         .single();
