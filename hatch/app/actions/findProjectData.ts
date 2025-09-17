@@ -13,13 +13,12 @@ export default async function findProjectData({ prompt } : { prompt: string }) {
 
     console.log("working");
 
-    const systemPrompt = `You are an assistant who is part of an application which matches users together who want to work on projects collaboratively. You will be given a block of text describing a project the user wants to create. Your job is to return a suitable short description of the project, and a list of categories in the format of your response schema, which match what they have described. These categories will later be used by the app to select projects from the database which the user can choose from. Return at least three categories, but add as many as you can, up to 9.`;
-
-    // const prompt = `I want to work on a website based project so I can learn more about basic skills and work with someone who will teach me more.`;
+    const systemPrompt = `You are an assistant who is part of an application which matches users together who want to work on projects collaboratively. You will be given a block of text describing a project the user wants to find. Your job is to return a list of categories in the format of your response schema, which match what they have described. These categories will later be used by the app to select projects from the database which the user can choose from. Return at least three categories, but add as many as you can, up to 9.`;
 
     console.log("trying");
 
     try {
+
         const response = await ai.models.generateContent({
             model: "gemini-2.5-flash",
             contents: prompt,
@@ -27,24 +26,16 @@ export default async function findProjectData({ prompt } : { prompt: string }) {
                 systemInstruction: systemPrompt,
                 responseMimeType: "application/json",
                 responseSchema: {
-                    type: Type.OBJECT,
-                    properties: {
-                        description: {
-                            type: Type.STRING,
-                        },
-                        tags: {
-                            type: Type.ARRAY,
-                            items: {
-                                type: Type.OBJECT,
-                                properties: {
-                                    categoryName: {
-                                        type: Type.STRING,
-                                    },
-                                },
-                                propertyOrdering: ["categoryName"],
+                    type: Type.ARRAY,
+                    items: {
+                        type: Type.OBJECT,
+                        properties: {
+                            categoryName: {
+                                type: Type.STRING,
                             },
                         },
-                    }
+                        propertyOrdering: ["categoryName"],
+                    },
                 },
                 thinkingConfig: {
                     thinkingBudget: 0,
