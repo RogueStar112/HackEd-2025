@@ -19,8 +19,6 @@ export default async function Page() {
         `);
 
 
-    console.log(projects);
-
     if (error) {
         console.error(error);
         return <div className="p-4 text-red-500">Failed to load projects.</div>;
