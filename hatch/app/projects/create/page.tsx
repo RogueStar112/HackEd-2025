@@ -2,11 +2,13 @@
 
 import { useState } from "react";
 import generateTags from "@/app/actions/ai";
-import { AIMode, Tag } from "@/lib/types";
+import { AIMode, CreateResponse, Tag } from "@/lib/types";
 
 
 export default function Page() {
 
+    const [projectName, setProjectName] = useState("");
+    const [prompt, setPrompt] = useState("");
     const [description, setDescription] = useState("");
     const [tags, setTags] = useState<Tag[]>([]);
     const [loading, setLoading] = useState(false);
@@ -17,15 +19,16 @@ export default function Page() {
         setLoading(true);
         setError(null);
 
-        const description = formData.get('description')!.toString();
+        const prompt = formData.get('prompt')!.toString();
 
         try {
-            const result = await generateTags({
+            const { description, tags } = await generateTags({
                 mode: AIMode.create,
-                prompt: description
-            }) as Tag[];
+                prompt
+            }) as CreateResponse;
 
-            setTags(result.map((t) => ({ ...t, selected: false })));
+            setDescription(description);
+            setTags(tags.map((t) => ({ ...t, selected: false })));
 
         } catch (err: any) {
             console.error("Error generating tags:", err);
@@ -45,19 +48,29 @@ export default function Page() {
     };
 
     const submitSelected = () => {
-        console.log(tags);
+
+        const filtered = tags.filter(tag => tag.selected);
+        console.log({ name: projectName, description, filteredTags: filtered });
         // send to backend if needed
     }
 
     return (
         <div className="p-4">
             <form action={onSubmit} className="flex flex-col gap-2 max-w-md">
+                <input 
+                    type="text"
+                    name="project-name"
+                    placeholder="Give your project a name..."
+                    value={projectName}
+                    className="border p-2 rounded"
+                    onChange={(e) => setProjectName(e.target.value)}
+                />
                 <input
                     type="text"
-                    name="description"
+                    name="prompt"
                     placeholder="Describe your project..."
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
+                    value={prompt}
+                    onChange={(e) => setPrompt(e.target.value)}
                     className="border p-2 rounded"
                 />
                 <button
@@ -71,6 +84,13 @@ export default function Page() {
 
             {error && (
                 <p className="mt-2 text-red-600 font-medium">{error}</p>
+            )}
+
+            {description && (
+                <div className="mt-6 p-4 border rounded bg-gray-50">
+                    <h2 className="font-semibold mb-2">AI Description:</h2>
+                    <p className="text-gray-700">{description}</p>
+                </div>
             )}
 
             {tags.length > 0 && (
@@ -107,10 +127,10 @@ tag.selected ? "bg-green-500 text-white" : "bg-gray-300 text-black"
     //         <form action={onSubmit} className="flex flex-col gap-2 max-w-md">
     //             <input
     //                 type="text"
-    //                 name="description"
+    //                 name="prompt"
     //                 placeholder="Describe your project..."
-    //                 value={description}
-    //                 onChange={(e) => setDescription(e.target.value)}
+    //                 value={prompt}
+    //                 onChange={(e) => setPrompt(e.target.value)}
     //                 className="border p-2 rounded"
     //             />
     //             <button

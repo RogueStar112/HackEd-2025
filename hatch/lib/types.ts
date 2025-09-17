@@ -13,6 +13,11 @@ export enum AIMode {
     create = "create"
 }
 
+export interface CreateResponse {
+    description: string;
+    tags: Tag[];
+}
+
 export interface Tag {
     categoryName: string;
     selected?: boolean;
