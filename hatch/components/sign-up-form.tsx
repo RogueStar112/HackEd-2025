@@ -47,7 +47,6 @@ export function SignUpForm({
                     emailRedirectTo: `${window.location.origin}/protected`,
                 },
             });
-            data.user.id
             if (error) throw error;
 
             router.push("/auth/sign-up-success");
