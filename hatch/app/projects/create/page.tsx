@@ -3,6 +3,7 @@
 import { useState } from "react";
 import generateTags from "@/app/actions/ai";
 import { AIMode, CreateResponse, Tag } from "@/lib/types";
+import { createProject } from "@/app/actions/createProject";
 
 
 export default function Page() {
@@ -47,11 +48,10 @@ export default function Page() {
         );
     };
 
+    // upload to database
     const submitSelected = () => {
-
-        const filtered = tags.filter(tag => tag.selected);
-        console.log({ name: projectName, description, filteredTags: filtered });
-        // send to backend if needed
+        const filtered = tags.filter(tag => tag.selected).map(tag => tag.categoryName);
+        createProject({ name: projectName, description, categories: filtered });
     }
 
     return (
@@ -115,7 +115,7 @@ tag.selected ? "bg-green-500 text-white" : "bg-gray-300 text-black"
                         onClick={submitSelected}
                         className="mt-4 bg-purple-600 text-white rounded px-4 py-2"
                     >
-                        Submit Selected Tags
+                        Create Project
                     </button>
                 </div>
             )}
