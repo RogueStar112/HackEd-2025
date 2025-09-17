@@ -4,6 +4,6 @@ export interface ProjectsPageRow {
     description: string;
     category: string;
     owner: string;
-    profiles: { name: string }[];
+    profiles: { name: string };
     roles: { id: string, skills: string[], time_needed_hours: string }[]; 
 }

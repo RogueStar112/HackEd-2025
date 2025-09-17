@@ -20,7 +20,7 @@ export default function ProjectInfoBox({ id, name, description, category, profil
             role="button"
         >
             <h2 className="text-lg font-bold">{name}</h2>
-            {profiles[0] && <p className="text-sm text-gray-600">Owner: {profiles[0].name}</p>}
+            {profiles && <p className="text-sm text-gray-600">Owner: {profiles.name}</p>}
             {category && <p className="text-sm text-gray-600">Category: {category}</p>}
             <p>{description}</p>
             {roles && roles.length > 0 && (

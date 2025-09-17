@@ -7,32 +7,16 @@ export default async function Page() {
 
     const supabase = createClient();
 
-
-    // const { data: projects, error } = await supabase
-    //     .from("profiles")
-    //     .select(`*`);
-
     const { data: projects, error } = await supabase
-        .from("profiles")
-        .select("*");
-    // const { data: projects, error } = await supabase
-    //     .from("projects")
-    //     .select(`
-    //         id,
-    //         profiles!projects_user_id_fkey (
-    //             name
-    //         )
-    //     `);
-        // .select(`
-        //     id,
-        //     name,
-        //     description,
-        //     category,
-        //     profiles!projects_user_id_fkey (
-        //         name
-        //     ),
-        //     roles ( id, skills, time_needed_hours )
-        // `);
+        .from("projects")
+        .select(`
+            id,
+            name,
+            description,
+            category,
+            profiles (name),
+            roles ( id, skills, time_needed_hours )
+        `);
 
 
     console.log(projects);
@@ -45,7 +29,7 @@ export default async function Page() {
     return (
         <div className="max-w-5xl mx-auto p-4 flex flex-col gap-4">
             <h1 className="text-2xl font-bold mb-4">Projects</h1>
-            {/* <ProjectsList initialProjects={projects as ProjectsPageRow[] || []} /> */}
+            <ProjectsList initialProjects={projects as ProjectsPageRow[] || []} />
         </div>
     );
 }

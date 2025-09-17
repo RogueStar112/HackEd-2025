@@ -42,6 +42,11 @@ export default function ProjectsList({ initialProjects }: {initialProjects: Proj
                             id={project.id}
                             name={project.name}
                             description={project.description}
+                            category={project.category}
+                            owner={project.owner}
+                            profiles={project.profiles}
+                            roles={project.roles}
+
                         />
                     ))
                 ) : (
