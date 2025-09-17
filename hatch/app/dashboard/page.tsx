@@ -18,7 +18,7 @@ export default function DashboardPage() {
         Find Projects
       </Button>
 
-      <Button onClick={() => router.push("/projects/own")}>
+      <Button onClick={() => router.push("/projects/my")}>
         My Projects
       </Button>
 
