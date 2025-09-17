@@ -1,9 +1,10 @@
 "use server";
 
 import { GoogleGenAI, Type } from "@google/genai";
-import { AIMode } from "@/lib/types";
+import { AIMode, Tag } from "@/lib/types";
 
-export default async function generateTags({ mode, prompt } : { mode: AIMode, prompt: string}) {
+
+export default async function generateTags({ mode, prompt } : { mode: AIMode, prompt: string }) {
 
     // The client gets the API key from the environment variable `GEMINI_API_KEY`.
     const ai = new GoogleGenAI({
@@ -12,41 +13,46 @@ export default async function generateTags({ mode, prompt } : { mode: AIMode, pr
 
     console.log("working");
 
-    const systemPrompt = `You are an assistant who is part of an application which matches users together who want to work on projects collaboratively. You will be given a block of text describing a project the user wants to ${mode}. Your job is to return a list of categories in the format of your response schema, which match what they have described. These categories will later be used by the app to select projects from the database which the user can choose from.`;
+    const systemPrompt = `You are an assistant who is part of an application which matches users together who want to work on projects collaboratively. You will be given a block of text describing a project the user wants to ${mode}. Your job is to return a list of categories in the format of your response schema, which match what they have described. These categories will later be used by the app to select projects from the database which the user can choose from. Return a list of at least three categories, but add as many as you can, up to 9.`;
 
     // const prompt = `I want to work on a website based project so I can learn more about basic skills and work with someone who will teach me more.`;
 
     console.log("trying");
 
-    const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
-        contents: prompt,
-        config: {
-            systemInstruction: systemPrompt,
-            responseMimeType: "application/json",
-            responseSchema: {
-                type: Type.ARRAY,
-                items: {
-                    type: Type.OBJECT,
-                    properties: {
-                        categoryName: {
-                            type: Type.STRING,
+    try {
+        const response = await ai.models.generateContent({
+            model: "gemini-2.5-flash",
+            contents: prompt,
+            config: {
+                systemInstruction: systemPrompt,
+                responseMimeType: "application/json",
+                responseSchema: {
+                    type: Type.ARRAY,
+                    items: {
+                        type: Type.OBJECT,
+                        properties: {
+                            categoryName: {
+                                type: Type.STRING,
+                            },
                         },
+                        propertyOrdering: ["categoryName"],
                     },
-                    propertyOrdering: ["categoryName"],
+                },
+                thinkingConfig: {
+                    thinkingBudget: 0,
                 },
             },
-            thinkingConfig: {
-                thinkingBudget: 0,
-            },
-        },
-    });
+        });
 
-    console.log("response: ", response.text);
+        console.log("response: ", response.text);
 
-    const data = JSON.parse(response.text!);
-    console.log("data: ", data);
+        const data = JSON.parse(response.text!);
+        console.log("data: ", data);
 
-    return data;
+        return data as Tag[];
+
+    } catch (error) {
+        throw error;
+    }
 }
 

@@ -12,3 +12,8 @@ export enum AIMode {
     find = "find",
     create = "create"
 }
+
+export interface Tag {
+    categoryName: string;
+    selected?: boolean;
+}
