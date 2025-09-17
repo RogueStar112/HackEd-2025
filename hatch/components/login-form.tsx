@@ -33,19 +33,40 @@ export function LoginForm({
     setError(null);
 
     try {
-      const { error } = await supabase.auth.signInWithPassword({
+      const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
-      if (error) throw error;
-      // Update this route to redirect to an authenticated route. The user already has an active session.
-      router.push("/protected");
+
+      if (authError) throw authError;
+
+      const user = authData.user;
+      if (!user) throw new Error("No user found after login");
+
+      // ✅ check if profile exists
+      const { data: profile, error: profileError } = await supabase
+        .from("profile")
+        .select("*")
+        .eq("id", user.id) // adjust column name if your FK is different
+        .single();
+
+      if (profileError && profileError.code !== "PGRST116") {
+        // PGRST116 = no rows found, which is fine
+        throw profileError;
+      }
+
+      if (profile) {
+        router.push("/dashboard");
+      } else {
+        router.push("/profile/modify");
+      }
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "An error occurred");
     } finally {
       setIsLoading(false);
     }
   };
+
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>

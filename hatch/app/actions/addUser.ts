@@ -31,7 +31,7 @@ export async function addUser(formData: FormData) {
 
 
     // Inject the correct UUID from the authenticated user
-    const { error } = await supabase.from("profiles").insert([data]);
+    const { error } = await supabase.from("profiles").upsert([data]);
 
     if (error) {
         console.error("Supabase insert error:", error.message);
