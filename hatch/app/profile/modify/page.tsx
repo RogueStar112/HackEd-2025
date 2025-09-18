@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { addUser } from "../../actions/addUser";
+import { useRouter } from "next/navigation";
 
 interface FormData {
     username: string;
@@ -14,6 +15,8 @@ interface FormData {
 }
 
 export default function UserForm() {
+
+    const router = useRouter();
     const [formData, setFormData] = useState<FormData>({
         username: "",
         name: "",
@@ -53,6 +56,7 @@ export default function UserForm() {
         e.preventDefault();
         const result = await addUser(formData);
         console.log("Supabase result:", result);
+        router.push("/");
     };
 
     return (
