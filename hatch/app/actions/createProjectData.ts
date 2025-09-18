@@ -1,10 +1,10 @@
 "use server";
 
 import { GoogleGenAI, Type } from "@google/genai";
-import { AIMode, CreateResponse } from "@/lib/types";
+import { CreateResponse } from "@/lib/types";
 
 
-export default async function generateTags({ mode, prompt } : { mode: AIMode, prompt: string }) {
+export default async function createProjectData({ prompt } : { prompt: string }) {
 
     // The client gets the API key from the environment variable `GEMINI_API_KEY`.
     const ai = new GoogleGenAI({
@@ -13,7 +13,7 @@ export default async function generateTags({ mode, prompt } : { mode: AIMode, pr
 
     console.log("working");
 
-    const systemPrompt = `You are an assistant who is part of an application which matches users together who want to work on projects collaboratively. You will be given a block of text describing a project the user wants to ${mode}. Your job is to return a suitable short description of the project, and a list of categories in the format of your response schema, which match what they have described. These categories will later be used by the app to select projects from the database which the user can choose from. Return at least three categories, but add as many as you can, up to 9.`;
+    const systemPrompt = `You are an assistant who is part of an application which matches users together who want to work on projects collaboratively. You will be given a block of text describing a project the user wants to create. Your job is to return a suitable short description of the project, and a list of categories in the format of your response schema, which match what they have described. These categories will later be used by the app to select projects from the database which the user can choose from. Return at least three categories, but add as many as you can, up to 9.`;
 
     // const prompt = `I want to work on a website based project so I can learn more about basic skills and work with someone who will teach me more.`;
 

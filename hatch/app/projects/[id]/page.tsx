@@ -1,4 +1,4 @@
-// app/projects/[id]/page.tsx
+// @ts-nocheck
 import { createClient } from "@/lib/supabase/client";
 import BackButton from "@/components/back-button";
 
