@@ -89,6 +89,21 @@ roles(*)
             <p className="mb-2">{project.description}</p>
             <p className="mb-2">Owner: {project.profiles?.username}</p>
 
+            {/* Categories / Tags */}
+            {project.categories?.length > 0 && (
+                <div className="flex flex-wrap gap-2 mb-4">
+                    {project.categories.map((cat: string) => (
+                        <span
+                            key={cat}
+                            className="px-2 py-1 text-xs bg-blue-100 text-blue-700 rounded-full"
+                        >
+                            {cat}
+                        </span>
+                    ))}
+                </div>
+            )}
+
+
             {isOwner && (
                 <button
                     onClick={handleNewRole}
