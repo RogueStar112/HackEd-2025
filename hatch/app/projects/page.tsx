@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/client";
 import ProjectsList from "@/components/projects-list";
 import { ProjectsPageRow, FilterData } from "@/lib/types";
+import Link from "next/link";
 
 
 export default async function Page(
@@ -36,6 +37,9 @@ export default async function Page(
     return (
         <div className="max-w-5xl mx-auto p-4 flex flex-col gap-4">
             <h1 className="text-2xl font-bold mb-4">Projects</h1>
+            <button>
+                <Link href="/">Home</Link>
+            </button>
             <ProjectsList
                 initialProjects={projects as ProjectsPageRow[] || []}
                 filterData={filterData}
