@@ -1,4 +1,5 @@
-// @ts-nocheck
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+
 "use client";
 
 import findProjectData from "@/app/actions/findProjectData";
