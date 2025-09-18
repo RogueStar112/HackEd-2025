@@ -70,6 +70,13 @@ export default function ProfilePage() {
             >
                 Go Back to Main Menu
             </button>
+
+            <button
+                className="mt-4 px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
+                onClick={() => router.push("/profile/modify")}
+            >
+                Modify Profile
+            </button>
         </div>
     );
 }

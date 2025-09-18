@@ -4,7 +4,8 @@
 
 import findProjectData from "@/app/actions/findProjectData";
 import { useState } from "react";
-import { Tag } from "@/lib/types";
+import { Tag, FilterData } from "@/lib/types";
+import { useRouter } from "next/navigation";
 
 export default function FindProjectsPage() {
     const [prompt, setPrompt] = useState("");
@@ -13,6 +14,7 @@ export default function FindProjectsPage() {
     const [timeMin, setTimeMin] = useState(1);
     const [timeMax, setTimeMax] = useState(10);
     const [error, setError] = useState<string | null>(null);
+    const router = useRouter();
 
     const onSubmit = async (formData: FormData) => {
 
@@ -28,8 +30,13 @@ export default function FindProjectsPage() {
                 tags: filtered,
                 ageRange: { lowerBound: ageMin, upperBound: ageMax },
                 timeCommitment: { lowerBound: timeMin, upperBound: timeMax },
-            }
+            } as FilterData;
+
             console.log(findData);
+
+            // Encode as URL parameter
+            const query = encodeURIComponent(JSON.stringify(findData));
+            router.push(`/projects?filters=${query}`);
 
 
         } catch (err: any) {
@@ -111,6 +118,12 @@ export default function FindProjectsPage() {
                 {error && <p className="text-red-600 font-medium">{error}</p>}
 
             </form>
+            <button
+                className="bg-blue-600 text-white rounded px-4 py-2"
+                onClick={() => router.push("/projects")}
+            >
+                Select All
+            </button>
         </div>
     );
 }

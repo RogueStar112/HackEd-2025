@@ -1,9 +1,14 @@
 import { createClient } from "@/lib/supabase/client";
 import ProjectsList from "@/components/projects-list";
-import { ProjectsPageRow } from "@/lib/types";
+import { ProjectsPageRow, FilterData } from "@/lib/types";
+import Link from "next/link";
 
 
-export default async function Page() {
+export default async function Page(
+    props: { searchParams: Promise<{ filters?: string}> }
+) {
+
+    const { filters } = await props.searchParams;
 
     const supabase = createClient();
 
@@ -13,21 +18,32 @@ export default async function Page() {
             id,
             name,
             description,
-            category,
+            categories,
             profiles (name),
             roles ( id, skills, time_needed_hours )
         `);
 
+    console.log(error);
 
     if (error) {
         console.error(error);
         return <div className="p-4 text-red-500">Failed to load projects.</div>;
     }
 
+    const filterData = (filters
+        ? JSON.parse(filters)
+        : null) as FilterData | null;
+
     return (
         <div className="max-w-5xl mx-auto p-4 flex flex-col gap-4">
             <h1 className="text-2xl font-bold mb-4">Projects</h1>
-            <ProjectsList initialProjects={projects as ProjectsPageRow[] || []} />
+            <button>
+                <Link href="/">Home</Link>
+            </button>
+            <ProjectsList
+                initialProjects={projects as ProjectsPageRow[] || []}
+                filterData={filterData}
+            />
         </div>
     );
 }
