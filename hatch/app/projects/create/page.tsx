@@ -65,7 +65,7 @@ export default function Page() {
     return (
         <div className="flex flex-col gap-4 items-center min-h-screen max-w-[512px] mx-auto">
 
-            <div className="flex w-full justify-between bg-blue-400 p-4">
+            <div className="flex w-full justify-between bg-gradient-to-r from-sky-50 to-blue-500 p-4">
               <HatchLogoNoText />
               <h1 className="text-md sm:text-3xl font-black items-center flex">Create New Project</h1>
             </div>

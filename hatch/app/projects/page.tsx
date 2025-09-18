@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/client";
 import ProjectsList from "@/components/projects-list";
 import { ProjectsPageRow, FilterData } from "@/lib/types";
-import Link from "next/link";
+import { HatchLogoNoText } from "@/components/hatch-logo-notext";
 
 
 export default async function Page(
@@ -36,10 +36,12 @@ export default async function Page(
 
     return (
         <div className="max-w-5xl mx-auto p-4 flex flex-col gap-4">
-            <h1 className="text-2xl font-bold mb-4">Projects</h1>
-            <button>
-                <Link href="/">Home</Link>
-            </button>
+
+            <div className="flex w-full justify-between bg-gradient-to-r from-sky-50 to-blue-500 p-4">
+                          <HatchLogoNoText />
+                          <h1 className="text-md sm:text-3xl font-black items-center flex">Projects</h1>
+            </div>
+
             <ProjectsList
                 initialProjects={projects as ProjectsPageRow[] || []}
                 filterData={filterData}

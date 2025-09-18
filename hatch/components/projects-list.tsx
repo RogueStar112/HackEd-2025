@@ -66,7 +66,7 @@ export default function ProjectsList({
 
                 <CategorySelect selectedCategories={tags} />
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center w-full [&>*]:grow sm:[&>*]:grow-0 gap-2">
                     <label className="text-sm">Age:</label>
                     <input
                         type="number"
@@ -87,7 +87,7 @@ export default function ProjectsList({
                     />
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center w-full [&>*]:grow sm:[&>*]:grow-0 gap-2">
                     <label className="text-sm">Time (hrs/week):</label>
                     <input
                         type="number"

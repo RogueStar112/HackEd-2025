@@ -6,6 +6,7 @@ import findProjectData from "@/app/actions/findProjectData";
 import { useState } from "react";
 import { Tag, FilterData } from "@/lib/types";
 import { useRouter } from "next/navigation";
+import { HatchLogoNoText } from "@/components/hatch-logo-notext";
 
 export default function FindProjectsPage() {
     const [prompt, setPrompt] = useState("");
@@ -48,8 +49,14 @@ export default function FindProjectsPage() {
 
 
     return (
-        <div className="p-6 max-w-md mx-auto">
-            <h1 className="text-xl font-semibold mb-4">Find Projects</h1>
+        <div className="max-w-md mx-auto">
+
+            <div className="flex w-full justify-between bg-gradient-to-r from-sky-50 to-blue-500 p-4">
+              <HatchLogoNoText />
+              <h1 className="text-md sm:text-3xl font-black items-center flex">Find Projects</h1>
+            </div>
+
+
             <form action={onSubmit} className="flex flex-col gap-4">
                 <textarea
                     name="prompt"

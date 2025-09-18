@@ -4,9 +4,11 @@ import { use, useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import BackButton from "@/components/back-button";
 import { useRouter } from "next/navigation";
+import { projectTraceSource } from "next/dist/build/swc/generated-native";
+import { HatchLogoNoText } from "@/components/hatch-logo-notext";
 
 interface ProjectPageProps {
-  params: Promise<{ id: string }>;
+    params: Promise<{ id: string }>;
 }
 
 export default function ProjectPage({ params }: ProjectPageProps) {
@@ -28,15 +30,15 @@ export default function ProjectPage({ params }: ProjectPageProps) {
             const { data, error } = await supabase
                 .from("projects")
                 .select(`
-                    *,
-                    profiles(username, name),
-                    roles(*)
-                `)
+*,
+profiles(username, name),
+roles(*)
+`)
                 .eq("id", id)
                 .single();
 
             if (error) setError("Project not found");
-            else setProject(data);
+                else setProject(data);
         };
 
         load();
@@ -113,6 +115,29 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                     </button>
                 ))}
             </div>
+            {/* <div className="max-w-3xl mx-auto p-4 flex flex-col gap-4"> */}
+            {/*                  <div className="flex w-full justify-between bg-gradient-to-r from-sky-50 to-blue-500 p-4"> */}
+            {/*                   <HatchLogoNoText /> */}
+            {/*                   <h1 className="text-md sm:text-3xl font-black items-center flex">{project.name}</h1> */}
+            {/*     </div> */}
+            {/**/}
+            {/*     <div className="w-full flex justify-between"> */}
+            {/*         <BackButton /> */}
+            {/*           <p className="mb-2">Owner: {project.profiles?.username}</p> */}
+            {/**/}
+            {/*     </div> */}
+            {/**/}
+            {/*     <p className="mb-2">{project.description}</p> */}
+            {/**/}
+            {/*     <h2 className="text-xl font-semibold mt-4">Roles</h2> */}
+            {/*     <ul className="ml-4 list-disc"> */}
+            {/*         {project.roles?.map((role: any) => ( */}
+            {/*             <li key={role.id}> */}
+            {/*                 Skills: {role.skills.join(', ')} | Hours: {role.time_needed_hours} */}
+            {/*             </li> */}
+            {/*         ))} */}
+            {/*     </ul> */}
+            {/* </div> */}
         </div>
     );
 }

@@ -9,7 +9,7 @@ export default function CategorySelect({
 }) {
   return (
     <div className="flex flex-col gap-2">
-      <p className="text-sm text-gray-700">
+      <p className="text-sm text-gray-700 text-justify">
         <span className="font-semibold">Selected categories:</span>{" "}
         {selectedCategories.length > 0
           ? selectedCategories.join(", ")
@@ -18,7 +18,7 @@ export default function CategorySelect({
 
       <Link
         href="/projects/find"
-        className="inline-block bg-blue-600 text-white text-sm rounded px-4 py-2 w-fit"
+        className="inline-block bg-blue-600 text-white text-sm rounded px-4 py-2 w-full text-center"
       >
         Change filters
       </Link>

@@ -21,6 +21,8 @@ export function AuthMenuClient({ user }: { user: any }) {
       </Button>
 
       <LogoutButton />
+      
+      
     </div>
   ) : (
     <>
@@ -34,10 +36,10 @@ export function AuthMenuClient({ user }: { user: any }) {
   );
 
   return (
-    <div className="relative flex items-center">
+    <div className="relative flex flex-col-reverse sm:flex-row items-center justify-center">
       {/* Hamburger button - visible on small screens */}
       <button
-        className="sm:hidden my-auto h-full p-2 rounded-md focus:outline-none"
+        className="sm:hidden h-full p-2 rounded-md focus:outline-none"
         onClick={toggleMenu}
       >
         <svg
@@ -66,7 +68,7 @@ export function AuthMenuClient({ user }: { user: any }) {
 
       {/* Menu - hidden on small screens unless menuOpen */}
       <div
-        className={`mt-2 justify-center items-center h-full bg-white shadow-lg rounded-md p-2 sm:static sm:flex sm:gap-4 sm:shadow-none sm:bg-transparent sm:p-0 ${
+        className={`absolute bottom-0 mt-2 top-[60px] right-[5px] justify-center items-center h-fit bg-white shadow-lg rounded-md p-2 sm:static sm:flex sm:gap-4 sm:shadow-none sm:bg-transparent sm:p-0 ${
           menuOpen ? "block" : "hidden"
         }`}
       >

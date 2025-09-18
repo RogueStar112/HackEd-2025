@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { getUserId } from "../../actions/getUserId"; // adjust path if needed
 import { useRouter } from "next/navigation";
+import { HatchLogoNoText } from "@/components/hatch-logo-notext";
 
 interface Project {
     id: string;
@@ -53,7 +54,10 @@ export default function MyProjectsPage() {
 
     return (
         <div className="max-w-xl mx-auto p-6 flex flex-col gap-4">
-            <h1 className="text-2xl font-bold mb-4">My Projects</h1>
+               <div className="flex w-full justify-between bg-gradient-to-r from-sky-50 to-blue-500 p-4">
+                                          <HatchLogoNoText />
+                                          <h1 className="text-md sm:text-3xl font-black items-center flex">My Projects</h1>
+                            </div>
 
             {projects.map((project) => (
                 <div
