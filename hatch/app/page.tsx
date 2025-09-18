@@ -7,6 +7,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/server";
 import { HatchLogoNoText } from "@/components/hatch-logo-notext";
+import { Plus, SearchCheck } from "lucide-react";
 
 export default async function Home() {
 
@@ -32,10 +33,10 @@ export default async function Home() {
                         <div className="mx-auto p-6 flex flex-col gap-4">
 
                             <Button className="w-full h-full">
-                                <Link href="/projects/create">Create Project</Link>
+                                <Link href="/projects/create" className="w-[184px] h-[92px] items-center flex flex-col justify-center [&>svg]:scale-[2] gap-4"><Plus></Plus>Create Project</Link>
                             </Button>
                             <Button className="w-full h-full">
-                                <Link href="/projects/find">Find Project</Link>
+                                <Link href="/projects/find" className="w-[184px] h-[92px] items-center flex flex-col justify-center [&>svg]:scale-[2] gap-4"><SearchCheck></SearchCheck>Find Project</Link>
                             </Button>
                         </div>
                     )}
@@ -47,15 +48,7 @@ export default async function Home() {
 
                 <footer className="w-full flex items-center justify-center border-t mx-auto text-center text-xs gap-8 py-16">
                     <p>
-                        Powered by{" "}
-                        <a
-                            href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-                            target="_blank"
-                            className="font-bold hover:underline"
-                            rel="noreferrer"
-                        >
-                            Supabase
-                        </a>
+                        Switch Themes
                     </p>
                     <ThemeSwitcher />
                 </footer>
