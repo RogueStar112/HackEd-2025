@@ -49,7 +49,7 @@ export default function FindProjectsPage() {
 
 
     return (
-        <div className="max-w-md mx-auto">
+        <div className="max-w-md mx-auto gap-4 flex flex-col">
 
             <div className="flex w-full justify-between bg-gradient-to-r from-sky-50 to-blue-500 p-4">
               <HatchLogoNoText />

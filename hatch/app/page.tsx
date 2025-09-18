@@ -48,7 +48,7 @@ export default async function Home() {
 
                 <footer className="w-full flex items-center justify-center border-t mx-auto text-center text-xs gap-8 py-16">
                     <p>
-                        Switch Themes
+                        &copy; 2025 | Where Collaboration is Born
                     </p>
                     <ThemeSwitcher />
                 </footer>
