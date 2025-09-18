@@ -1,7 +1,7 @@
 "use server";
 
 import { GoogleGenAI, Type } from "@google/genai";
-import { CreateResponse } from "@/lib/types";
+import { Tag } from "@/lib/types";
 
 
 export default async function findProjectData({ prompt } : { prompt: string }) {
@@ -48,7 +48,7 @@ export default async function findProjectData({ prompt } : { prompt: string }) {
         const data = JSON.parse(response.text!);
         console.log("data: ", data);
 
-        return data as CreateResponse;
+        return data as Tag[];
 
     } catch (error) {
         throw error;
