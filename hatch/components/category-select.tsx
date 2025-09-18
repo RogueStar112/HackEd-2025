@@ -1,41 +1,27 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import Link from "next/link";
 
-export default function CategorySelect({ onChange }: {
-  onChange: (category: string) => void;
+export default function CategorySelect({
+  selectedCategories,
+}: {
+  selectedCategories: string[];
 }) {
-
-  const [categories, setCategories] = useState<string[]>([]);
-  const [selected, setSelected] = useState("");
-
-  useEffect(() => {
-    const load = async () => {
-      const res = await fetch("/categories.json");
-      const data = await res.json();
-      setCategories(["All", ...data]);
-    };
-    load();
-  }, []);
-
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelected(e.target.value);
-    onChange(e.target.value);
-  };
-
   return (
-    <div className="flex flex-col gap-2 w-48">
-      <select
-        value={selected}
-        onChange={handleChange}
-        className="border rounded-md p-2 text-sm"
+    <div className="flex flex-col gap-2">
+      <p className="text-sm text-gray-700">
+        <span className="font-semibold">Selected categories:</span>{" "}
+        {selectedCategories.length > 0
+          ? selectedCategories.join(", ")
+          : "None"}
+      </p>
+
+      <Link
+        href="/projects/find"
+        className="inline-block bg-blue-600 text-white text-sm rounded px-4 py-2 w-fit"
       >
-        {categories.map((cat) => (
-          <option key={cat} value={cat}>
-            {cat}
-          </option>
-        ))}
-      </select>
+        Change filters
+      </Link>
     </div>
   );
 }
