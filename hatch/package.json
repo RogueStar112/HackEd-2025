@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "SKIP_ENV_VALIDATION=1 NEXT_PUBLIC_DISABLE_TS=true next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
