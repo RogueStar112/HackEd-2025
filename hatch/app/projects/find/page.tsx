@@ -1,6 +1,8 @@
 "use client";
 
+import findProjectData from "@/app/actions/findProjectData";
 import { useState } from "react";
+import { Tag } from "@/lib/types";
 
 export default function FindProjectsPage() {
     const [prompt, setPrompt] = useState("");
@@ -8,44 +10,38 @@ export default function FindProjectsPage() {
     const [ageMax, setAgeMax] = useState(40);
     const [timeMin, setTimeMin] = useState(1);
     const [timeMax, setTimeMax] = useState(10);
-    const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    const onSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setLoading(true);
+    const onSubmit = async (formData: FormData) => {
+
         setError(null);
 
+        const prompt = formData.get('prompt')!.toString();
+
         try {
-            const payload = {
-                prompt,
+
+            const tags = await findProjectData({ prompt }) as Tag[];
+            const filtered = tags.map(tag => tag.categoryName);
+            const findData = {
+                tags: filtered,
                 ageRange: { lowerBound: ageMin, upperBound: ageMax },
                 timeCommitment: { lowerBound: timeMin, upperBound: timeMax },
-            };
+            }
+            console.log(findData);
 
-            const res = await fetch("/api/find-projects", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload),
-            });
 
-            if (!res.ok) throw new Error("Failed to find projects");
-
-            const data = await res.json();
-            console.log("Found projects:", data);
-            // you could navigate or display results here
         } catch (err: any) {
-            console.error(err);
-            setError(err.message || "Something went wrong");
-        } finally {
-            setLoading(false);
+            console.error("Error generating tags:", err);
+            setError(err.message || "An unexpected error occurred.");
+
         }
     };
+
 
     return (
         <div className="p-6 max-w-md mx-auto">
             <h1 className="text-xl font-semibold mb-4">Find Projects</h1>
-            <form onSubmit={onSubmit} className="flex flex-col gap-4">
+            <form action={onSubmit} className="flex flex-col gap-4">
                 <textarea
                     name="prompt"
                     value={prompt}
@@ -104,13 +100,14 @@ export default function FindProjectsPage() {
 
                 <button
                     type="submit"
-                    disabled={loading}
                     className="bg-blue-600 text-white rounded px-4 py-2"
                 >
-                    {loading ? "Finding..." : "Find Projects"}
+                    Find Projects
                 </button>
 
+
                 {error && <p className="text-red-600 font-medium">{error}</p>}
+
             </form>
         </div>
     );
