@@ -20,6 +20,7 @@ export default function ProjectsList({
     const [ageRange, setAgeRange] = useState(filterData?.ageRange ?? { lowerBound: 0, upperBound: 100 });
     const [timeRange, setTimeRange] = useState(filterData?.timeCommitment ?? { lowerBound: 0, upperBound: 100 });
 
+
     const filtered = useMemo(() => {
         return initialProjects.filter((p) => {
             // 1. Name filter
@@ -39,12 +40,16 @@ export default function ProjectsList({
 
             // 4. Time commitment filter — if *any* role has time_needed_hours in range
             const matchesTime =
-                p.roles?.some(
-                    (r) =>
-                        r.time_needed_hours >= timeRange.lowerBound &&
-                            r.time_needed_hours <= timeRange.upperBound
-                ) ?? false;
+                (p.roles && p.roles.length > 0) ? (
+                    p.roles?.some(
+                        (r) =>
+                            r.time_needed_hours >= timeRange.lowerBound &&
+                                r.time_needed_hours <= timeRange.upperBound
+                    ) ?? false
+                ) : true;
 
+            // console.log(!!p.roles);
+            // console.log(p, matchesName, matchesTags, matchesAge, matchesTime);
             return matchesName && matchesTags && matchesAge && matchesTime;
         });
     }, [initialProjects, query, tags, ageRange, timeRange]);

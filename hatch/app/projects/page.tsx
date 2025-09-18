@@ -3,7 +3,11 @@ import ProjectsList from "@/components/projects-list";
 import { ProjectsPageRow, FilterData } from "@/lib/types";
 
 
-export default async function Page({ searchParams } : { searchParams: { filters?: string } }) {
+export default async function Page(
+    props: { searchParams: Promise<{ filters?: string}> }
+) {
+
+    const { filters } = await props.searchParams;
 
     const supabase = createClient();
 
@@ -25,8 +29,8 @@ export default async function Page({ searchParams } : { searchParams: { filters?
         return <div className="p-4 text-red-500">Failed to load projects.</div>;
     }
 
-    const filters = (searchParams.filters
-        ? JSON.parse(searchParams.filters)
+    const filterData = (filters
+        ? JSON.parse(filters)
         : null) as FilterData | null;
 
     return (
@@ -34,7 +38,7 @@ export default async function Page({ searchParams } : { searchParams: { filters?
             <h1 className="text-2xl font-bold mb-4">Projects</h1>
             <ProjectsList
                 initialProjects={projects as ProjectsPageRow[] || []}
-                filterData={filters}
+                filterData={filterData}
             />
         </div>
     );

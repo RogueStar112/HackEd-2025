@@ -118,6 +118,12 @@ export default function FindProjectsPage() {
                 {error && <p className="text-red-600 font-medium">{error}</p>}
 
             </form>
+            <button
+                className="bg-blue-600 text-white rounded px-4 py-2"
+                onClick={() => router.push("/projects")}
+            >
+                Select All
+            </button>
         </div>
     );
 }
