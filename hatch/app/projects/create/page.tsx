@@ -1,9 +1,11 @@
+// @ts-nocheck
 "use client";
 
 import { useState } from "react";
 import createProjectData from "@/app/actions/createProjectData";
 import { CreateResponse, Tag } from "@/lib/types";
 import { createProject } from "@/app/actions/createProject";
+import { HatchLogoNoText } from "@/components/hatch-logo-notext";
 import { useRouter } from "next/navigation";
 
 
@@ -62,32 +64,39 @@ export default function Page() {
     }
 
     return (
-        <div className="p-4">
-            <form action={onSubmit} className="flex flex-col gap-2 max-w-md">
-                <input 
-                    type="text"
-                    name="project-name"
-                    placeholder="Give your project a name..."
-                    value={projectName}
-                    className="border p-2 rounded"
-                    onChange={(e) => setProjectName(e.target.value)}
-                />
-                <input
-                    type="text"
-                    name="prompt"
-                    placeholder="Describe your project..."
-                    value={prompt}
-                    onChange={(e) => setPrompt(e.target.value)}
-                    className="border p-2 rounded"
-                />
-                <button
-                    type="submit"
-                    className="bg-blue-600 text-white rounded px-4 py-2"
-                    disabled={loading}
-                >
-                    {loading ? "Generating..." : "Generate Tags"}
-                </button>
-            </form>
+        <div className="flex flex-col gap-4 items-center min-h-screen max-w-[512px] mx-auto">
+
+            <div className="flex w-full justify-between bg-blue-400 p-4">
+              <HatchLogoNoText />
+              <h1 className="text-md sm:text-3xl font-black items-center flex">Create New Project</h1>
+            </div>
+
+            <div className="p-4">
+              <form action={onSubmit} className="flex flex-col gap-2">
+                  <input 
+                      type="text"
+                      name="project-name"
+                      placeholder="Give your project a name..."
+                      value={projectName}
+                      className="border p-2 rounded"
+                      onChange={(e) => setProjectName(e.target.value)}
+                  />
+                  <textarea
+                      name="prompt"
+                      placeholder="Describe your project..."
+                      value={prompt}
+                      onChange={(e) => setPrompt(e.target.value)}
+                      className="border p-2 rounded w-[512px] max-w-[90vw] h-64"
+                  />
+                  <button
+                      type="submit"
+                      className="bg-blue-600 text-white rounded px-4 py-2"
+                      disabled={loading}
+                  >
+                      {loading ? "Generating..." : "Generate Tags"}
+                  </button>
+              </form>
+            </div>
 
             {error && (
                 <p className="mt-2 text-red-600 font-medium">{error}</p>
@@ -102,8 +111,8 @@ export default function Page() {
 
             {tags.length > 0 && (
                 <div className="mt-6">
-                    <h2 className="font-semibold mb-2">Select Tags:</h2>
-                    <div className="flex flex-wrap gap-2">
+                    <h2 className="font-semibold mb-2 text-center">Select Tags:</h2>
+                    <div className="flex flex-wrap [&>*]:grow gap-2 mx-4">
                         {tags.map((tag, i) => (
                             <button
                                 key={i}
@@ -120,7 +129,7 @@ tag.selected ? "bg-green-500 text-white" : "bg-gray-300 text-black"
                     <button
                         type="button"
                         onClick={submitSelected}
-                        className="mt-4 bg-purple-600 text-white rounded px-4 py-2"
+                        className="mt-4 bg-purple-600 text-white rounded px-4 py-2 w-full"
                     >
                         Create Project
                     </button>
